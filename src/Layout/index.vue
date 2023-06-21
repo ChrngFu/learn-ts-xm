@@ -3,7 +3,7 @@
     <div>
       <Menu></Menu>
     </div>
-    <div>
+    <div class="xm-layout__right">
       <Header></Header>
       <Content></Content>
     </div>
@@ -20,5 +20,10 @@
   @include b(layout) {
     @include bfc;
     display: flex;
+    @include e(right) {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
   }
 </style>

@@ -1,7 +1,12 @@
 <template>
-  <div>Header</div>
+  <div class="xm-header">Header</div>
 </template>
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style scoped lang="scss">
+  @include b(header) {
+    height: 64px;
+    border-bottom: 1px solid grey;
+  }
+</style>
