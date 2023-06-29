@@ -42,3 +42,10 @@ $mod-sel: "--" !default;
   height: 100%;
   overflow: hidden;
 }
+
+// flex
+@mixin flex($jc: flex-start, $ai: center) {
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
+}

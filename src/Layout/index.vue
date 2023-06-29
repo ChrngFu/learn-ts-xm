@@ -14,6 +14,8 @@
   import Header from "./Header/index.vue";
   import Menu from "./Menu/index.vue";
   import Content from "./Content/index.vue";
+  const nowTime = new Date().format("现在是yyyy年MM月dd日，hh时mm分ss秒");
+  console.log(nowTime);
 </script>
 
 <style scoped lang="scss">
