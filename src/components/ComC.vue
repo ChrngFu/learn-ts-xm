@@ -1,29 +1,20 @@
 <template>
   <div id="com-c">
     ComC
-    <div class="demo-box" ref="demoBox"></div>
+    <div class="box" v-move></div>
   </div>
 </template>
-<script setup lang="ts">
-  import * as anime from "animejs";
-  import { ref, onMounted } from "vue";
-  let demoBox = ref(null);
-  const drawAnime = (el: Element | null) => {
-    let bgAnimate: anime.AnimeInstance;
-    bgAnimate = anime({
-      targets: el,
-      translateX: "200px",
-    });
-  };
-
-  onMounted(() => {
-    drawAnime(demoBox.value);
-  });
-</script>
+<script setup lang="ts"></script>
 <style scoped lang="scss">
-  .demo-box {
+  .box {
     width: 100px;
     height: 100px;
-    background-color: pink;
+    border: 2px dashed pink;
+    background-color: skyblue;
+  }
+  .drop-box {
+    width: 400px;
+    height: 400px;
+    background-color: lightblue;
   }
 </style>
