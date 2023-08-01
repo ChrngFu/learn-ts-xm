@@ -1,6 +1,7 @@
 import { onMounted, nextTick, onBeforeUnmount } from "vue";
 import * as echarts from "echarts";
 import { EChartParams } from "@/typings/interfaces";
+import { merge } from "lodash";
 // useEcharts方法
 export default function (params: EChartParams) {
   /**
@@ -12,9 +13,31 @@ export default function (params: EChartParams) {
   const { id, options, isInit = true, isResize = true } = params;
 
   let myChart: echarts.ECharts | null = null;
+  // 默认option
+  const defaultOptions: echarts.EChartsOption = {
+    title: {},
+    tooltip: {
+      trigger: "axis",
+    },
+    legend: {},
+    xAxis: {
+      type: "category",
+    },
+    yAxis: {
+      type: "value",
+      splitLine: {
+        show: true,
+        lineStyle: {
+          // 虚线
+          type: [5, 5],
+        },
+      },
+    },
+    series: [],
+  };
 
   // 初始化options
-  let initOptions = { ...options };
+  const initOptions = merge(defaultOptions, options);
 
   // 初始化Chart
   const initChart = () => {

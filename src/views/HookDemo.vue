@@ -15,7 +15,7 @@
     yAxis: {},
     series: [
       {
-        name: "销量",
+        name: "服装销量",
         type: "bar",
         data: [5, 20, 36, 10, 10, 20],
       },
