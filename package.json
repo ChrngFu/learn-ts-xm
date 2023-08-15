@@ -18,7 +18,7 @@
   "devDependencies": {
     "@types/animejs": "^3.1.7",
     "@types/lodash": "^4.14.195",
-    "@types/node": "^20.3.2",
+    "@types/node": "^20.4.4",
     "@vitejs/plugin-vue": "^4.1.0",
     "typescript": "^5.0.2",
     "vite": "^4.3.9",
