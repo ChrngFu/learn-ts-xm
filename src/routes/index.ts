@@ -17,6 +17,11 @@ const routes: RouteRecordRaw[] = [
     name: "virtual-list",
     component: () => import("@/views/VirtualList.vue"),
   },
+  {
+    path: "/hook-demo",
+    name: "hook-demo",
+    component: () => import("@/views/HookDemo.vue"),
+  },
 ];
 
 const router = createRouter({
