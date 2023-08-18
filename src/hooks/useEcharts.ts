@@ -3,13 +3,13 @@ import * as echarts from "echarts";
 import { EChartParams } from "@/typings/interfaces";
 import { merge } from "lodash";
 // useEcharts方法
+/**
+ * @param options charts配置
+ * @param id dom-id
+ * @param isInit 是否初始化调用
+ * @param isResize 窗口变化是否允许重画charts
+ */
 export default function (params: EChartParams) {
-  /**
-   * @param options charts配置
-   * @param id dom-id
-   * @param isInit 是否初始化调用
-   * @param isResize 窗口变化是否允许重画charts
-   */
   const { id, options, isInit = true, isResize = true } = params;
 
   let myChart: echarts.ECharts | null = null;

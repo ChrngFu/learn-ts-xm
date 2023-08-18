@@ -1,10 +1,10 @@
-import './mouseClickBubble'
+import "./mouseClickBubble";
 /**
  * 根据指定的格式格式化当前日期和时间。
  * @param fmt - 格式化字符串。默认为 "yyyy-MM"。
  * @returns 格式化后的日期和时间。
  */
-Date.prototype.format = function(fmt: string = "yyyy-MM"): string {
+Date.prototype.format = function (fmt: string = "yyyy-MM-dd"): string {
   const date = this as Date;
   const year = date.getFullYear().toString();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
