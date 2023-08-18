@@ -22,6 +22,11 @@ const routes: RouteRecordRaw[] = [
     name: "hook-demo",
     component: () => import("@/views/HookDemo.vue"),
   },
+  {
+    path: "/real-request",
+    name: "real-request",
+    component: () => import("@/views/RealNetworkRequests.vue"),
+  },
 ];
 
 const router = createRouter({
