@@ -1,9 +1,16 @@
 <template>
-  <div id="chart-demo">useCharts</div>
+  <div id="chart-demo" ref="chartDemo">useCharts</div>
+  <el-button type="primary" @click="distroyed">销毁echarts</el-button>
+  <el-button type="primary" @click="buildChart">重建echarts</el-button>
 </template>
 <script setup lang="ts">
+  import { Ref, nextTick, onMounted, ref } from "vue";
   import { EChartsOption } from "echarts";
-  import useEchart from "@/hooks/useEcharts.ts";
+  import { useEcharts } from "@/hooks/useEcharts.ts";
+
+  const chartDemo = ref<HTMLElement | null>(null);
+  const { setOption, showLoading, getInstance } = useEcharts(chartDemo as Ref<HTMLElement>);
+
   const options: EChartsOption = {
     title: {
       text: "ECharts 入门示例",
@@ -21,15 +28,29 @@
       },
     ],
   };
-  useEchart({
-    id: "chart-demo",
-    options,
+  let instance: echarts.ECharts | null = null;
+  const distroyed = () => {
+    instance?.clear();
+  };
+
+  const buildChart = () => {
+    showLoading();
+    setTimeout(() => {
+      setOption(options);
+    }, 1000);
+  };
+
+  onMounted(() => {
+    nextTick(() => {
+      buildChart();
+      instance = getInstance();
+    });
   });
 </script>
 <style scoped lang="scss">
   #chart-demo {
     width: 50%;
     height: 50%;
-    border: 1px dashed pink;
+    border: 1px dashed red;
   }
 </style>
