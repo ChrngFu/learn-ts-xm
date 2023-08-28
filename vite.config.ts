@@ -44,6 +44,8 @@ export default defineConfig({
   },
   // vite打包配置
   build: {
+    // 打包文件夹
+    outDir: "docs",
     sourcemap: false,
     minify: "terser",
     // 启用/禁用 CSS 代码拆分。
