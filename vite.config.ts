@@ -42,4 +42,40 @@ export default defineConfig({
       },
     },
   },
+  // vite打包配置
+  build: {
+    sourcemap: false,
+    minify: "terser",
+    // 启用/禁用 CSS 代码拆分。
+    cssCodeSplit: true,
+    terserOptions: {
+      compress: {
+        drop_console: true, // 删除所有日志语句
+        drop_debugger: true, // 删除所有debugger语句
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            return id.toString().split("node_modules/")[1].split("/")[0].toString();
+          }
+        },
+        chunkFileNames: chunkInfo => {
+          const facadeModuleId = chunkInfo.facadeModuleId ? chunkInfo.facadeModuleId.split("/") : [];
+          const fileName = facadeModuleId[facadeModuleId.length - 2] || "[name]";
+          return `assets/js/${fileName}/[name].[hash].js`;
+        },
+        // manualChunks: {
+        //   lodash: ["lodash"],
+        //   animejs: ["animejs"],
+        //   echarts: ["echarts"],
+        //   elementPlus: ["element-plus"],
+        //   // vue vue-router合并打包
+        //   vue: ["vue", "vue-router"],
+        // },
+      },
+    },
+  },
 });

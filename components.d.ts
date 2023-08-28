@@ -11,7 +11,6 @@ declare module 'vue' {
     ComB: typeof import('./src/components/ComB.vue')['default']
     ComC: typeof import('./src/components/ComC.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
-    ElButtonsty: typeof import('element-plus/es')['ElButtonsty']
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
