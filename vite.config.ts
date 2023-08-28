@@ -42,6 +42,7 @@ export default defineConfig({
       },
     },
   },
+  base: "./",
   // vite打包配置
   build: {
     // 打包文件夹
