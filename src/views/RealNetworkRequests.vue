@@ -17,25 +17,27 @@
     </ul>
     <v-chart class="daily-carbon-emissions-chart" :loading="isLoading" :option="option" autoresize />
     <br />
-    <el-button type="primary" @click="openDialog">查看详情</el-button>
+    <el-button type="primary" @click="showDetail = true">查看详情</el-button>
     <div>
       <el-radio-group v-model="siteType">
-        <el-radio-button label="1">电</el-radio-button>
-        <el-radio-button label="3">热</el-radio-button>
-        <el-radio-button label="3">冷</el-radio-button>
+        <el-radio-button :label="1">电</el-radio-button>
+        <el-radio-button :label="2">热</el-radio-button>
+        <el-radio-button :label="3">冷</el-radio-button>
       </el-radio-group>
     </div>
-    <el-dialog title="查看详情" v-model="showDetail" width="80%">
-      <v-chart class="dialog-chart" autoresize :option="dialogChartOption"></v-chart>
+    <el-dialog title="查看详情" v-model="showDetail" @opened="openDialog" width="80%">
+      <div ref="dialogChartRef" class="dialog-chart"></div>
     </el-dialog>
   </div>
 </template>
 
-<script setup lang="ts">
-  import { onMounted, ref } from "vue";
+<script async setup lang="ts">
+  import { Ref, onMounted, ref, getCurrentInstance } from "vue";
   import VChart from "vue-echarts";
-  import Multi from "@/api/interface";
+  import { Multi } from "@/api/interface/multi";
   import { queryCarbonEmissionEveryDay, getOneSiteForecast } from "@/api/modules/multi";
+  import { useEcharts } from "@/hooks/useEcharts";
+  import type { EChartsOption, ECharts } from "echarts";
   const time = ref(new Date().format());
   const isLoading = ref(false);
   const option = ref({
@@ -90,29 +92,14 @@
   onMounted(handleQuery);
   const showDetail = ref(false);
   const siteType = ref(1);
-  const dialogChartOption = ref({
-    tooltip: {
-      trigger: "axis",
-    },
-    grid: {
-      top: "10%",
-      left: "3%",
-      right: "4%",
-      bottom: "3%",
-      containLabel: true,
-    },
-    xAxis: {
-      data: [] as string[],
-    },
-    yAxis: {},
-    dataZoom: {
-      start: 0,
-      end: 30,
-    },
-    series: [] as echarts.SeriesOption[],
-  });
+  const dialogChartRef = ref<HTMLDivElement | null>(null);
+  const instance = getCurrentInstance();
+  let echartsInstance: ECharts | null = null;
   const openDialog = async () => {
-    showDetail.value = true;
+    const { getInstance } = useEcharts(dialogChartRef as Ref<HTMLDivElement>, instance);
+    echartsInstance ? null : (echartsInstance = getInstance());
+    echartsInstance?.clear();
+    echartsInstance?.showLoading();
     const params: Multi.ISingleSiteForecastReq = {
       type: siteType.value,
       uuid: "d6dca475-b6e1-4481-afa1-58377ec3f51b",
@@ -121,28 +108,56 @@
     if (res.code === 0) {
       const { getSiteDownCurve, getSiteSupplyEnergyCurve, getSiteTypeCurve, getSiteUpCurve } =
         res.data.SiteLoadForecastDayResponse;
-      dialogChartOption.value.xAxis.data = getSiteDownCurve.map(r => r.time);
-      dialogChartOption.value.series.push({
-        name: "基础负荷",
-        type: "line",
-        data: getSiteTypeCurve.map(r => r.forecastPower),
-      });
-      dialogChartOption.value.series.push({
-        name: "可上调负荷",
-        type: "line",
-        data: getSiteUpCurve.map(r => r.forecastPower),
-      });
-      dialogChartOption.value.series.push({
-        name: "可下调负荷",
-        type: "line",
-        data: getSiteDownCurve.map(r => r.forecastPower),
-      });
-      dialogChartOption.value.series.push({
-        name: "最大供给能力",
-        type: "line",
-        data: getSiteSupplyEnergyCurve.map(r => r.forecastPower),
-      });
+
+      const option: EChartsOption = {
+        tooltip: {
+          trigger: "axis",
+        },
+        grid: {
+          top: "10%",
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true,
+        },
+        xAxis: {
+          data: getSiteDownCurve.map(r => r.time),
+        },
+        yAxis: {},
+        dataZoom: [
+          {
+            type: "slider",
+            start: 0,
+            end: 30,
+            showDetail: false,
+          },
+        ],
+        series: [
+          {
+            name: "基础负荷",
+            type: "line",
+            data: getSiteTypeCurve.map(r => r.forecastPower),
+          },
+          {
+            name: "可上调负荷",
+            type: "line",
+            data: getSiteUpCurve.map(r => r.forecastPower),
+          },
+          {
+            name: "可下调负荷",
+            type: "line",
+            data: getSiteDownCurve.map(r => r.forecastPower),
+          },
+          {
+            name: "最大供给能力",
+            type: "line",
+            data: getSiteSupplyEnergyCurve.map(r => r.forecastPower),
+          },
+        ],
+      };
+      echartsInstance?.setOption(option);
     }
+    echartsInstance?.hideLoading();
   };
 </script>
 

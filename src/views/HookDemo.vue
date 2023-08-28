@@ -1,17 +1,31 @@
 <template>
-  <div id="chart-demo" ref="chartDemo">useCharts</div>
-  <el-button type="primary" @click="distroyed">销毁echarts</el-button>
-  <el-button type="primary" @click="buildChart">重建echarts</el-button>
+  <el-button type="primary" @click="visitable = true">打开对话框</el-button>
+  <el-dialog v-model="visitable" width="80%" @opened="openDialog">
+    <div id="chart-demo" ref="chartDemo">useCharts</div>
+    <template #footer>
+      <span>
+        <el-button @click="visitable = false">Cancel</el-button>
+        <el-button type="primary" @click="updata">更新数据</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 <script setup lang="ts">
-  import { Ref, nextTick, onMounted, ref } from "vue";
-  import { EChartsOption } from "echarts";
-  import { useEcharts } from "@/hooks/useEcharts.ts";
+  import { ref } from "vue";
+  import * as echarts from "echarts";
 
-  const chartDemo = ref<HTMLElement | null>(null);
-  const { setOption, showLoading, getInstance } = useEcharts(chartDemo as Ref<HTMLElement>);
+  const visitable = ref(false);
+  const chartDemo = ref<HTMLDivElement | null>(null);
 
-  const options: EChartsOption = {
+  const randomArr = () => {
+    let arr: number[] = [];
+    arr = new Array(6).fill(0).map(() => Math.floor(Math.random() * 100));
+    return arr;
+  };
+
+  let yData = randomArr();
+
+  const options = {
     title: {
       text: "ECharts 入门示例",
     },
@@ -24,33 +38,27 @@
       {
         name: "服装销量",
         type: "bar",
-        data: [5, 20, 36, 10, 10, 20],
+        data: yData,
       },
     ],
   };
-  let instance: echarts.ECharts | null = null;
-  const distroyed = () => {
-    instance?.clear();
-  };
+  let myChart: echarts.ECharts | null = null;
+  const updata = () => {
+    yData = randomArr();
 
-  const buildChart = () => {
-    showLoading();
-    setTimeout(() => {
-      setOption(options);
-    }, 1000);
+    myChart ? null : (myChart = echarts.init(chartDemo.value as HTMLDivElement));
+    myChart.clear();
+    myChart.setOption(options);
   };
-
-  onMounted(() => {
-    nextTick(() => {
-      buildChart();
-      instance = getInstance();
-    });
-  });
+  const openDialog = () => {
+    myChart ? null : (myChart = echarts.init(chartDemo.value as HTMLDivElement));
+    myChart.setOption(options);
+  };
 </script>
 <style scoped lang="scss">
   #chart-demo {
-    width: 50%;
-    height: 50%;
+    width: 700px;
+    height: 400px;
     border: 1px dashed red;
   }
 </style>

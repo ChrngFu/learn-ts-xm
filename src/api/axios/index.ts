@@ -3,7 +3,7 @@ import { ApiResult } from "@/api/interface";
 // 创建一个 axios 实例
 const service: AxiosInstance = axios.create({
   baseURL: "",
-  timeout: 10 * 1000, // 10s 请求超时
+  timeout: 5 * 1000, // 5s 请求超时
 });
 
 // 添加请求拦截器

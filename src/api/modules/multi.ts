@@ -1,5 +1,5 @@
 import { post } from "@/api/axios";
-import Multi from "@/api/interface";
+import { Multi } from "@/api/interface/multi";
 
 // 登录
 export const login = (data: Multi.ILoginReq) => post<Multi.ILoginRes>("/uas/v1/default/login", data);
