@@ -20,9 +20,9 @@
     <el-button type="primary" @click="openDialog">查看详情</el-button>
     <div>
       <el-radio-group v-model="siteType">
-        <el-radio-button :label="1">电</el-radio-button>
-        <el-radio-button :label="3">热</el-radio-button>
-        <el-radio-button :label="3">冷</el-radio-button>
+        <el-radio-button label="1">电</el-radio-button>
+        <el-radio-button label="3">热</el-radio-button>
+        <el-radio-button label="3">冷</el-radio-button>
       </el-radio-group>
     </div>
     <el-dialog title="查看详情" v-model="showDetail" width="80%">
@@ -105,7 +105,10 @@
       data: [] as string[],
     },
     yAxis: {},
-    dataZoom: {},
+    dataZoom: {
+      start: 0,
+      end: 30,
+    },
     series: [] as echarts.SeriesOption[],
   });
   const openDialog = async () => {
