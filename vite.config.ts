@@ -26,7 +26,7 @@ export default defineConfig({
         rewrite: path => path.replace(/^\/uas/, "/uas"),
       },
     },
-    host: "0.0.0.0",
+    host: true,
     port: 7411,
   },
   resolve: {

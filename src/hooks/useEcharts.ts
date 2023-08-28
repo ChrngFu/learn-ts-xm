@@ -1,79 +1,90 @@
-import { onMounted, nextTick, onBeforeUnmount } from "vue";
+import { Ref, nextTick, onMounted, onUnmounted, unref } from "vue";
 import * as echarts from "echarts";
-import { EChartParams } from "@/typings/interfaces";
-import { merge } from "lodash";
-// useEcharts方法
+
 /**
- * @param options charts配置
- * @param id dom-id
- * @param isInit 是否初始化调用
- * @param isResize 窗口变化是否允许重画charts
+ * hook 封装 echarts 函数
+ * @param elRef ref-DOM节点
+ * @param [animation=true] 是否添加过渡效果
+ * @param [isResize=true] 是否更新大小
  */
-export default function (params: EChartParams) {
-  const { id, options, isInit = true, isResize = true } = params;
+export function useEcharts(elRef: Ref<HTMLElement>, isResize = true, animation: boolean = true) {
+  // echarts实例
+  let instance: echarts.EChartsType | null = null;
 
-  let myChart: echarts.ECharts | null = null;
-  // 默认option
-  const defaultOptions: echarts.EChartsOption = {
-    title: {},
-    tooltip: {
-      trigger: "axis",
-    },
-    legend: {},
-    xAxis: {
-      type: "category",
-    },
-    yAxis: {
-      type: "value",
-      splitLine: {
-        show: true,
-        lineStyle: {
-          // 虚线
-          type: [5, 5],
-        },
-      },
-    },
-    series: [],
-  };
-
-  // 初始化options
-  const initOptions = merge(defaultOptions, options);
-
-  // 初始化Chart
+  // 初始化echarts
   const initChart = () => {
-    const el = document.getElementById(id);
-    if (el && !myChart) {
-      console.log("init");
-      myChart = echarts.init(el);
-      myChart.setOption(initOptions, true);
-    }
-  };
-  // 重绘Chart
-  const resizeChart = () => {
-    if (myChart) {
-      console.log("resize");
-      myChart.resize();
-    }
+    const el = unref(elRef);
+    if (!el || !unref(el)) return;
+    instance = echarts.init(el);
   };
 
-  // 销毁Chart
-  const destroyChart = () => {
-    if (myChart) {
-      myChart.dispose();
-      myChart = null;
-      console.log("dispose");
-    }
+  // 更新/设置配置
+  const setOption = (option: echarts.EChartsOption) => {
+    nextTick(() => {
+      if (!instance) {
+        initChart();
+        if (!instance) return;
+      }
+
+      instance.setOption(option);
+      hideLoading();
+    });
   };
 
-  if (isResize) window.addEventListener("resize", resizeChart);
+  // 获取echarts实例
+  const getInstance = (): echarts.ECharts | null => {
+    if (!instance) {
+      initChart();
+    }
+    return instance;
+  };
+
+  // 更新echarts
+  const resize = () => {
+    console.log("resize");
+
+    instance?.resize();
+  };
+
+  // 监听dom元素
+  const watchElement = () => {
+    // 给元素添加过渡效果
+    if (animation) {
+      elRef.value.style.transition = "width 1s, height 1s";
+    }
+    const resizeObserver = new ResizeObserver(_entries => resize());
+    resizeObserver.observe(elRef.value);
+  };
+
+  // 显示加载中
+  const showLoading = () => {
+    if (!instance) {
+      initChart();
+    }
+    instance?.showLoading();
+  };
+
+  // 隐藏加载中
+  const hideLoading = () => {
+    if (!instance) {
+      initChart();
+    }
+    instance?.hideLoading();
+  };
 
   onMounted(() => {
-    nextTick(() => {
-      isInit && initChart();
-    });
+    window.addEventListener("resize", resize);
+    if (isResize) watchElement();
   });
-  onBeforeUnmount(() => {
-    destroyChart();
-    if (isResize) window.removeEventListener("resize", resizeChart);
+
+  onUnmounted(() => {
+    window.removeEventListener("resize", resize);
   });
+
+  return {
+    setOption,
+    getInstance,
+    showLoading,
+    hideLoading,
+  };
 }
