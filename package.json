@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "rmdir /s/q docs",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
