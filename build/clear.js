@@ -1,6 +1,6 @@
-import fs from "fs";
+const fs = require("fs");
 
-const filePath = "../docs";
+const filePath = "../../docs";
 
 if (fs.existsSync(filePath)) {
   const files = fs.readdirSync(filePath);
