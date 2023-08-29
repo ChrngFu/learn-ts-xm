@@ -1,5 +1,6 @@
 import { Ref, nextTick, onMounted, onUnmounted, unref, ComponentInternalInstance } from "vue";
-import * as echarts from "echarts";
+import echarts from "@/plugins/echarts";
+import type { EChartsOption } from "echarts";
 
 /**
  * hook 封装 echarts 函数
@@ -31,7 +32,7 @@ export function useEcharts(
   /**
    * 更新/设置配置
    */
-  const setOption = (option: echarts.EChartsOption) => {
+  const setOption = (option: EChartsOption) => {
     nextTick(() => {
       if (!echartsInstance) {
         initChart();

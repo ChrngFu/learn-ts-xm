@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "rmdir /s/q docs",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "prebuild": "npm run clear",
+    "build": "vite build",
+    "preview": "vite preview",
+    "clear": "node build/clear",
+    "check": "vue-tsc --noEmit"
   },
   "dependencies": {
     "animejs": "^3.2.1",
@@ -18,7 +20,6 @@
     "lodash": "^4.17.21",
     "sass": "^1.63.5",
     "vue": "^3.2.47",
-    "vue-echarts": "^6.6.1",
     "vue-router": "^4.2.2"
   },
   "devDependencies": {

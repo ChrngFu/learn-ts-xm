@@ -12,14 +12,14 @@
 </template>
 <script setup lang="ts">
   import { ref } from "vue";
-  import * as echarts from "echarts";
+  import echarts from "@/plugins/echarts";
 
   const visitable = ref(false);
   const chartDemo = ref<HTMLDivElement | null>(null);
 
   const randomArr = () => {
     let arr: number[] = [];
-    arr = new Array(6).fill(0).map(() => Math.floor(Math.random() * 100));
+    arr = new Array(6).fill(0).map(() => Math.floor(Math.random() * 100) + 50);
     return arr;
   };
 
@@ -44,8 +44,8 @@
   };
   let myChart: echarts.ECharts | null = null;
   const updata = () => {
-    yData = randomArr();
-
+    yData = yData.map(_r => Math.floor(Math.random() * 100) + 50);
+    options.series[0].data = yData;
     myChart ? null : (myChart = echarts.init(chartDemo.value as HTMLDivElement));
     myChart.clear();
     myChart.setOption(options);

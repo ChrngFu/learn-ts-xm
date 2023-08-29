@@ -1,4 +1,4 @@
-import * as echarts from "echarts";
+import echarts from "@/plugins/echarts";
 import { onBeforeUnmount, onMounted } from "vue";
 
 export function useEcharts(echartsInstance: echarts.ECharts) {

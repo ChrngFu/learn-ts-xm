@@ -15,7 +15,7 @@
         <el-button type="primary" @click="handleQuery">查询</el-button>
       </div>
     </ul>
-    <v-chart class="daily-carbon-emissions-chart" :loading="isLoading" :option="option" autoresize />
+    <div class="daily-carbon-emissions-chart" ref="emissionsChartRef"></div>
     <br />
     <el-button type="primary" @click="showDetail = true">查看详情</el-button>
     <div>
@@ -33,14 +33,13 @@
 
 <script async setup lang="ts">
   import { Ref, onMounted, ref, getCurrentInstance } from "vue";
-  import VChart from "vue-echarts";
   import { Multi } from "@/api/interface/multi";
   import { queryCarbonEmissionEveryDay, getOneSiteForecast } from "@/api/modules/multi";
   import { useEcharts } from "@/hooks/useEcharts";
   import type { EChartsOption, ECharts } from "echarts";
   const time = ref(new Date().format());
-  const isLoading = ref(false);
-  const option = ref({
+  const emissionsChartRef = ref<HTMLDivElement | null>(null);
+  const option = {
     tooltip: {
       trigger: "axis",
     },
@@ -77,17 +76,17 @@
         // data: curve.map(r => r.value),
       },
     ],
-  });
-
+  };
+  const { setOption, showLoading } = useEcharts(emissionsChartRef as Ref<HTMLDivElement>);
   const handleQuery = async () => {
-    isLoading.value = true;
+    showLoading();
     const res = await queryCarbonEmissionEveryDay({ time: time.value });
     if (res.code === 0) {
       const { carbonEmissions: curveData } = res.data;
-      option.value.xAxis["data"] = curveData.map(r => r.siteName);
-      option.value.series[0].data = curveData.map(r => r.value);
+      option.xAxis["data"] = curveData.map(r => r.siteName);
+      option.series[0].data = curveData.map(r => r.value);
+      setOption(option as EChartsOption);
     }
-    isLoading.value = false;
   };
   onMounted(handleQuery);
   const showDetail = ref(false);
