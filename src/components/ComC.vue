@@ -1,20 +1,23 @@
 <template>
   <div id="com-c">
     ComC
-    <div class="box" v-move></div>
+    <div class="box" v-move>按住拖动</div>
   </div>
 </template>
 <script setup lang="ts"></script>
 <style scoped lang="scss">
   .box {
-    width: 100px;
-    height: 100px;
+    width: 140px;
+    height: 140px;
+    font-size: 24px;
+    font-family: "站酷庆科黄油体";
     border: 2px dashed pink;
     background-color: skyblue;
-  }
-  .drop-box {
-    width: 400px;
-    height: 400px;
-    background-color: lightblue;
+    line-height: 140px;
+    text-align: center;
+    user-select: none;
+    position: absolute;
+    right: 0;
+    top: 64px;
   }
 </style>

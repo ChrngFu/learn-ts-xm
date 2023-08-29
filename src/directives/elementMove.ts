@@ -6,6 +6,7 @@ const move: Directive = {
     el.style.position = "absolute";
     el.style.cursor = "move";
     el.onmousedown = e => {
+      e.preventDefault();
       const { pageX, pageY } = e;
       const innerTop = pageY - el.offsetTop;
       const innerLeft = pageX - el.offsetLeft;
@@ -17,7 +18,7 @@ const move: Directive = {
         el.style.top = `${newTop}px`;
       };
     };
-    el.onmouseup = () => {
+    document.onmouseup = () => {
       document.onmousemove = null;
     };
   },
