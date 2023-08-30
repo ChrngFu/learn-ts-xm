@@ -71,14 +71,6 @@ export default defineConfig({
           const fileName = facadeModuleId[facadeModuleId.length - 2] || "[name]";
           return `assets/js/${fileName}/[name].[hash].js`;
         },
-        // manualChunks: {
-        //   lodash: ["lodash"],
-        //   animejs: ["animejs"],
-        //   echarts: ["echarts"],
-        //   elementPlus: ["element-plus"],
-        //   // vue vue-router合并打包
-        //   vue: ["vue", "vue-router"],
-        // },
       },
     },
   },

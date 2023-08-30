@@ -1,5 +1,9 @@
 // 引入字体
 @import url("./fonts.scss");
+:root {
+  color-scheme: light dark;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -11,5 +15,5 @@ div {
 
 html,
 body {
-  font-family: "NotoSansSC-Regular","Microsoft YaHei";
+  font-family: "NotoSansSC-Regular", "Microsoft YaHei";
 }

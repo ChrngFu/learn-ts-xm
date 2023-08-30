@@ -9,5 +9,11 @@
     min-width: 200px;
     height: 100%;
     background-color: skyblue;
+
+    @media (prefers-color-scheme: dark) {
+      & {
+        background-color: darkcyan;
+      }
+    }
   }
 </style>
