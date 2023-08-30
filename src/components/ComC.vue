@@ -7,13 +7,13 @@
 <script setup lang="ts"></script>
 <style scoped lang="scss">
   .box {
-    width: 140px;
-    height: 140px;
+    width: 200px;
+    height: 200px;
     font-size: 24px;
     font-family: "站酷庆科黄油体";
-    border: 2px dashed pink;
-    background-color: skyblue;
-    line-height: 140px;
+    border: 5px dashed orangered;
+    background-color: pink;
+    line-height: 200px;
     text-align: center;
     user-select: none;
     position: absolute;
