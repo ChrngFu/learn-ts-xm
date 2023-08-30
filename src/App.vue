@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { onMounted } from "vue";
+  import { ElConfigProvider } from "element-plus";
   import autofit from "autofit.js";
   import Layout from "./Layout/index.vue";
   onMounted(() => {
@@ -18,7 +19,9 @@
 </script>
 
 <template>
-  <Layout></Layout>
+  <el-config-provider size="default" :z-index="2000">
+    <Layout></Layout>
+  </el-config-provider>
 </template>
 
 <style lang="scss">

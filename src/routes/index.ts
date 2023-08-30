@@ -25,6 +25,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/real-request",
     name: "real-request",
+    meta: {
+      // 权限等级
+      userLevel: "dev",
+    },
     component: () => import("@/views/RealNetworkRequests.vue"),
   },
 ];
