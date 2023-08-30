@@ -31,6 +31,11 @@ const routes: RouteRecordRaw[] = [
     },
     component: () => import("@/views/RealNetworkRequests.vue"),
   },
+  {
+    path: "/use-IndexedDB",
+    name: "use-IndexedDB",
+    component: () => import("@/views/UseIndexedDB.vue"),
+  },
 ];
 
 const router = createRouter({
