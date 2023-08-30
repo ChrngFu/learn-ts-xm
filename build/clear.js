@@ -1,8 +1,17 @@
-const fs = require("fs");
+import * as fs from "node:fs";
 
-const filePath = "../../docs";
+const filePath = "docs";
 
-if (fs.existsSync(filePath)) {
+fs.stat(filePath, (err, stats) => {
+  if (err) {
+    console.log("路径不存在或文件已删除！");
+  } else {
+    deleteFolder(filePath);
+    console.log("删除成功！");
+  }
+});
+
+function deleteFolder(filePath) {
   const files = fs.readdirSync(filePath);
   files.forEach(file => {
     const nextFilePath = `${filePath}/${file}`;
@@ -16,7 +25,4 @@ if (fs.existsSync(filePath)) {
     }
   });
   fs.rmdirSync(filePath);
-  console.log("删除成功！");
-} else {
-  console.log("路径不存在或文件已删除！");
 }
