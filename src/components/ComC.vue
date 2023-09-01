@@ -1,11 +1,16 @@
 <template>
-  <div id="com-c">
+  <div class="com-c">
     ComC
     <div class="box" v-move>按住拖动</div>
   </div>
 </template>
 <script setup lang="ts"></script>
 <style scoped lang="scss">
+  .com-c {
+    border: 5px inset darkcyan;
+    padding: 8px;
+    margin-top: 8px;
+  }
   .box {
     width: 200px;
     height: 200px;

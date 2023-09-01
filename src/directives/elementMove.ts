@@ -10,9 +10,14 @@ function getScale(el: HTMLElement) {
     scaleY,
   };
 }
+const css = `
+  position:absolute;
+  cursor: move;
+`;
 // 使 v-drag 在所有组件中都可用
 const move: Directive = {
   mounted(el: HTMLElement) {
+    el.style.cssText = css;
     const root = document.getElementById("app") as HTMLElement;
     let { scaleX, scaleY } = getScale(root);
     window.addEventListener("resize", () => {

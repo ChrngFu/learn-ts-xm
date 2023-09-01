@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { start, done } from "@/utils/nprogress";
 import Home from "@/views/Home.vue";
 
 const routes: RouteRecordRaw[] = [
@@ -44,3 +45,11 @@ const router = createRouter({
 });
 
 export default router;
+
+router.beforeEach(() => {
+  start();
+});
+
+router.afterEach(() => {
+  done();
+});

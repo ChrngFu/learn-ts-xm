@@ -19,6 +19,7 @@
     "element-plus": "^2.3.9",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
+    "nprogress": "^0.2.0",
     "sass": "^1.63.5",
     "vue": "^3.2.47",
     "vue-router": "^4.2.2"
@@ -27,6 +28,7 @@
     "@types/animejs": "^3.1.7",
     "@types/lodash": "^4.14.195",
     "@types/node": "^20.4.4",
+    "@types/nprogress": "^0.2.0",
     "@vitejs/plugin-vue": "^4.1.0",
     "terser": "^5.19.2",
     "typescript": "^5.0.2",

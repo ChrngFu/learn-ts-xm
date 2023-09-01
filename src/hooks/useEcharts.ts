@@ -5,13 +5,13 @@ import type { EChartsOption } from "echarts";
 /**
  * hook 封装 echarts 函数
  * @param elRef ref-DOM节点
- * @param [comInstance=null] 使用该函数的组件实例
+ * @param [comInstance=undefined] 使用该函数的组件实例
  * @param [animation=true] 是否添加过渡效果
  * @param [isResize=true] 是否更新大小
  */
 export function useEcharts(
   elRef: Ref<HTMLElement>,
-  comInstance: ComponentInternalInstance | null = null,
+  comInstance: ComponentInternalInstance | undefined = undefined,
   isResize = true,
   animation: boolean = true,
 ) {
