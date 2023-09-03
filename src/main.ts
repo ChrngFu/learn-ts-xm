@@ -7,7 +7,6 @@ import "./utils";
 import directives from "./directives";
 // 按需引入echarts
 import "@/plugins/echarts";
-
 createApp(App)
   .use(router)
   .use(directives) // 调用安装指令

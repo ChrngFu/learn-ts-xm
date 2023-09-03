@@ -24,7 +24,7 @@
       </div>
       <div v-for="item in fileList" :key="item.uid" class="file-list-main">
         <img src="../assets/img/file.svg" alt="file" />
-        <span>{{ item.name }}</span>
+        <span @click="isPicture(item)">{{ item.name }}</span>
         <svg
           class="icon-del"
           @click="hadnleDelete(item)"
@@ -50,12 +50,21 @@
         <img class="icon-success" src="../assets/img/success.svg" alt="√" />
       </div>
     </div>
+    <PreviewImg :url="imgUrl" ref="previewImgRef" />
   </div>
 </template>
 
 <script setup lang="ts">
   import { ref, toRaw } from "vue";
-  import type { UploadProps, UploadUserFile, UploadFile, UploadFiles, UploadInstance } from "element-plus";
+  import type {
+    UploadProps,
+    UploadUserFile,
+    UploadFile,
+    UploadFiles,
+    UploadInstance,
+    UploadRawFile,
+  } from "element-plus";
+  import PreviewImg from "@/components/PreviewImg.vue";
   import anime from "animejs";
   import { findLastIndex } from "lodash";
   import LocalData from "@/utils/indexDB";
@@ -88,6 +97,31 @@
     }
     fileList.value = files;
   };
+  const imgUrl = ref("");
+
+  // 是否是图片的方法
+  const isPicture = (file: UploadUserFile) => {
+    //获取最后一个.的位置
+    const index = file.name.lastIndexOf(".");
+    //获取后缀
+    const ext = file.name.substring(index + 1);
+    //判断是否是图片类型
+    if (["png", "jpg", "jpeg"].indexOf(ext.toLowerCase()) != -1) {
+      handlePreview(file.raw as UploadRawFile);
+    }
+  };
+  const previewImgRef = ref<InstanceType<typeof PreviewImg>>();
+
+  const handlePreview = (img: UploadRawFile) => {
+    previewImgRef.value?.imgLoading();
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onloadend = () => {
+      imgUrl.value = reader.result as string;
+      previewImgRef.value?.open(imgUrl.value);
+    };
+  };
+
   // 删除文件列表项
   const hadnleDelete = (item: UploadUserFile) => {
     const index = fileList.value.findIndex(file => file.uid === item.uid);
@@ -133,11 +167,6 @@
       max-height: 700px;
       padding: 12px;
       border: 1px dashed lightpink;
-      @media (prefers-color-scheme: dark) {
-        & {
-          border: 1px dashed dimgray;
-        }
-      }
       &-main {
         width: 100%;
         padding: 4px;
@@ -150,6 +179,7 @@
           height: 1em;
         }
         span {
+          cursor: pointer;
           display: inline-block;
           width: calc(100% - 3em);
           text-indent: 0.4em;
@@ -166,6 +196,7 @@
         --icon-del: #333333;
         .icon-del {
           transition: all 1s;
+          cursor: pointer;
           display: none;
           width: 1em;
           height: 1em;
@@ -177,13 +208,7 @@
         }
         &:hover {
           color: #409eff;
-          cursor: pointer;
           background-color: #e3e3e3;
-          @media (prefers-color-scheme: dark) {
-            & {
-              background-color: #3e3e3e;
-            }
-          }
           .icon-success {
             display: none;
           }

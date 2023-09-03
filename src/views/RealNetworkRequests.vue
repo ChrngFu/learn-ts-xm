@@ -32,11 +32,12 @@
 </template>
 
 <script async setup lang="ts">
-  import { Ref, onMounted, ref, getCurrentInstance } from "vue";
+  import { Ref, onMounted, ref, getCurrentInstance, ComponentInternalInstance } from "vue";
   import { Multi } from "@/api/interface/multi";
   import { queryCarbonEmissionEveryDay, getOneSiteForecast } from "@/api/modules/multi";
+  import echarts from "@/plugins/echarts";
   import { useEcharts } from "@/hooks/useEcharts";
-  import type { EChartsOption, ECharts } from "echarts";
+  import type { EChartsOption } from "echarts";
   const time = ref(new Date().format());
   const emissionsChartRef = ref<HTMLDivElement | null>(null);
   const option = {
@@ -93,9 +94,9 @@
   const siteType = ref(1);
   const dialogChartRef = ref<HTMLDivElement | null>(null);
   const instance = getCurrentInstance();
-  let echartsInstance: ECharts | null = null;
+  let echartsInstance: echarts.EChartsType | null = null;
   const openDialog = async () => {
-    const { getInstance } = useEcharts(dialogChartRef as Ref<HTMLDivElement>, instance);
+    const { getInstance } = useEcharts(dialogChartRef as Ref<HTMLDivElement>, instance as ComponentInternalInstance);
     echartsInstance ? null : (echartsInstance = getInstance());
     echartsInstance?.clear();
     echartsInstance?.showLoading();
