@@ -1,5 +1,7 @@
 // 引入字体
-@import url("./fonts.scss");
+@use "./fonts.scss" as *;
+// 引入全局声明变量
+@use "./var.scss" as *;
 
 * {
   padding: 0;

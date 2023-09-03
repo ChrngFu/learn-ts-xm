@@ -8,11 +8,11 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-  @include b(home) {
+  .xm-home {
     @include bfc;
     padding: 10px 10px 0;
     overflow-y: auto;
-    @include e(item) {
+    .xm-home__item {
       border: 1px solid #ccc;
       padding: 10px;
       border-radius: 4px;

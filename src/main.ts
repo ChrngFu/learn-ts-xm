@@ -1,7 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "@/routes";
-import "@/assets/style/common.scss";
+import "element-plus/theme-chalk/dark/css-vars.css";
+import "@/styles/index.scss";
 import "./utils";
 // 引入自定义指令
 import directives from "./directives";

@@ -12,11 +12,13 @@ Date.prototype.format = function (fmt: string = "yyyy-MM-dd"): string {
   const hour = date.getHours().toString().padStart(2, "0");
   const minute = date.getMinutes().toString().padStart(2, "0");
   const second = date.getSeconds().toString().padStart(2, "0");
+  const week = ["日", "一", "二", "三", "四", "五", "六"];
   return fmt
     .replace("yyyy", year)
     .replace("MM", month)
     .replace("dd", day)
     .replace("hh", hour)
     .replace("mm", minute)
-    .replace("ss", second);
+    .replace("ss", second)
+    .replace("w", week[date.getDay()]);
 };

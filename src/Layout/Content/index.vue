@@ -7,7 +7,7 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-  @include b(content) {
+  .xm-content {
     flex: 1;
     overflow-y: auto;
   }

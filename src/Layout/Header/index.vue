@@ -1,59 +1,70 @@
 <template>
   <div class="xm-header">
-    <div
-      v-for="item in routerList"
-      :key="item.name"
-      class="xm-header__item"
-      :class="item.name === currentRoute.name ? 'active' : ''"
-      @click="routeJump(item)"
-    >
-      {{ toUpperCase(item.name) }}
+    <div class="title">Learn TS Demo</div>
+    <el-button v-if="isDark" dark :icon="Moon" circle @click="toggleDark()" />
+    <el-button v-else :icon="Sunny" circle @click="toggleDark()" />
+
+    <div class="time-info">
+      <iframe
+        allowtransparency="true"
+        frameborder="0"
+        width="317"
+        height="28"
+        scrolling="no"
+        src="//tianqi.2345.com/plugin/widget/index.htm?s=3&z=1&t=1&v=0&d=1&bd=0&k=000000&f=&ltf=009944&htf=cc0000&q=1&e=0&a=1&c=70447&w=317&h=28&align=center"
+      ></iframe>
+      <div class="time">{{ nowTime }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from "vue";
-  import { useRouter, RouteRecordName, useRoute, RouteRecordRaw } from "vue-router";
-  import { ElMessageBox } from "element-plus";
+  import { onBeforeUnmount, ref } from "vue";
+  import { Moon, Sunny } from "@element-plus/icons-vue";
+  import { isDark, toggleDark } from "@/utils/toggleDark";
 
-  const router = useRouter();
-  const currentRoute = useRoute();
-  // 获取当前路由表
-  const routerList = ref(router.getRoutes());
-  const mode = import.meta.env.MODE !== "development";
-
-  // 首字母转大写
-  const toUpperCase = (str: RouteRecordName | undefined): string =>
-    typeof str === "string" ? `${str.charAt(0).toUpperCase()}${str.slice(1)}` : "";
-
-  // 路由跳转
-  const routeJump = (item: RouteRecordRaw) => {
-    if (item.meta?.userLevel === "dev" && mode) {
-      ElMessageBox.alert("抱歉，您的权限等级不够，暂时无法查看！", "", {
-        confirmButtonText: "OK",
-        type: "warning",
-      });
-      return;
-    }
-    router.push(item.path);
+  const nowTime = ref("");
+  let timer: NodeJS.Timeout | null = null;
+  const getTime = () => {
+    nowTime.value = new Date().format("现在时间：yyyy年MM月dd日星期w，hh时mm分ss秒");
+    timer = setTimeout(getTime, 1000);
   };
+  getTime();
+  onBeforeUnmount(() => {
+    timer && clearTimeout(timer);
+  });
 </script>
 
 <style scoped lang="scss">
-  @include b(header) {
-    @include flex();
+  .xm-header {
+    width: 100%;
     height: 64px;
     padding: 0 12px;
     border-bottom: 1px solid grey;
-    @include e(item) {
+    font-family: "站酷庆科黄油体";
+    @include flex();
+    position: relative;
+    .title {
+      width: 200px;
       height: 100%;
+      font-size: 32px;
       line-height: 64px;
-      padding: 0 12px;
-      cursor: pointer;
+      text-align: center;
     }
-    .active {
-      color: cadetblue;
+    .time-info {
+      min-width: 320px;
+      height: 100%;
+      font-size: 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      right: 12px;
+      .time {
+        margin-top: 4px;
+      }
     }
   }
 </style>

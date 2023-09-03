@@ -1,26 +1,25 @@
 <template>
   <el-image
+    v-loading.fullscreen.lock="fullscreenLoading"
     style="width: 0px"
     :src="imgUrl"
     :preview-src-list="[imgUrl]"
     :zoom-rate="1.2"
     :initial-index="0"
     fit="cover"
+    hide-on-click-modal
     @close="close"
   />
 </template>
 
 <script setup lang="ts">
   import { ref, nextTick } from "vue";
-  import { ElLoading } from "element-plus";
 
-  const loading = ref();
+  const fullscreenLoading = ref(false);
+
   // 图片预览
   const imgLoading = () => {
-    loading.value = ElLoading.service({
-      lock: true,
-      text: "Loading",
-    });
+    fullscreenLoading.value = true;
   };
 
   const emits = defineEmits(["close"]);
@@ -29,7 +28,7 @@
     imgUrl.value = url;
     nextTick(() => {
       const el = document.querySelector(".el-image__inner.el-image__preview") as HTMLElement;
-      loading.value && loading.value.close();
+      fullscreenLoading.value = false;
       el.click();
     });
   };

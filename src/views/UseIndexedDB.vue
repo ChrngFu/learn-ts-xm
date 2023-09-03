@@ -2,6 +2,7 @@
   <div id="use-indexDB">
     IndexedDB
     <br />
+    <h2>图片类型文件可以点击预览</h2>
     <div class="file-list">
       <el-upload
         style="margin-bottom: 8px"
@@ -118,7 +119,9 @@
     reader.readAsDataURL(img);
     reader.onloadend = () => {
       imgUrl.value = reader.result as string;
-      previewImgRef.value?.open(imgUrl.value);
+      setTimeout(() => {
+        previewImgRef.value?.open(imgUrl.value);
+      }, 2000);
     };
   };
 
@@ -128,7 +131,7 @@
     const el = document.querySelectorAll(".file-list-main")[index];
     anime({
       targets: el,
-      translateY: -el.clientHeight,
+      translateY: -100,
       opacity: 0,
       complete: () => {
         fileList.value = fileList.value.filter(file => file.uid !== item.uid);

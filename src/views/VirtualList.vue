@@ -60,10 +60,10 @@
         text-align: center;
       }
       .bg01 {
-        background-color: lightgreen;
+        background-color: var(--my-color-lightgreen);
       }
       .bg02 {
-        background-color: lightblue;
+        background-color: var(--my-color-lightblue);
       }
     }
   }

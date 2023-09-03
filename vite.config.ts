@@ -1,17 +1,18 @@
+import path from "path";
+
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import VueDevTools from "vite-plugin-vue-devtools";
 
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
-import ElementPlus from "unplugin-element-plus/vite";
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
     // 路径别名配置
     alias: {
       "@": "/src",
+      "~/": `${path.resolve(__dirname, "src")}/`,
     },
   },
   plugins: [
@@ -26,11 +27,13 @@ export default defineConfig({
       resolvers: [
         // Auto register Element Plus components
         // 自动导入 Element Plus 组件
-        ElementPlusResolver(),
+        ElementPlusResolver({
+          importStyle: "sass",
+          // directives: true,
+          // version: "2.1.5",
+        }),
       ],
     }),
-    ElementPlus({}),
-    VueDevTools(),
   ],
   server: {
     // 配置代理
@@ -48,7 +51,8 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-        @import "./src/bem.scss";
+        @use '@/styles/mixin.scss' as *;
+        @use '@/styles/element/index.scss' as *;
           `,
       },
     },

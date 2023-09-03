@@ -1,0 +1,12 @@
+:root {
+  --my-color-pink: pink;
+  --my-color-skyblue: skyblue;
+  --my-color-lightblue: lightblue;
+  --my-color-lightgreen: lightgreen;
+}
+.dark {
+  --my-color-pink: lightcoral;
+  --my-color-skyblue: rgb(42, 92, 112);
+  --my-color-lightblue: rgb(63, 95, 107);
+  --my-color-lightgreen: rgb(45, 90, 45);
+}
