@@ -42,15 +42,20 @@
 
 <style scoped lang="scss">
   .xm-menu {
-    min-width: 200px;
+    min-width: 300px;
     height: 100%;
     background-color: var(--my-color-skyblue);
     .xm-header__item {
       width: 100%;
       height: 64px;
+      font-size: 20px;
       line-height: 64px;
       text-align: center;
       cursor: pointer;
+      &:hover {
+        color: var(--my-color-pink);
+        text-decoration: underline;
+      }
     }
     .active {
       color: var(--my-color-pink);

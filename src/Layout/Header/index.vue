@@ -1,17 +1,17 @@
 <template>
   <div class="xm-header">
     <div class="title">Learn TS Demo</div>
-    <el-button v-if="isDark" dark :icon="Moon" circle @click="toggleDark()" />
-    <el-button v-else :icon="Sunny" circle @click="toggleDark()" />
+    <el-button :dark="isDark" :icon="isDark ? Moon : Sunny" circle size="large" @click="toggleDark()" />
 
-    <div class="time-info">
+    <div class="more-info">
       <iframe
         allowtransparency="true"
         frameborder="0"
-        width="317"
-        height="28"
+        width="400"
+        height="64"
         scrolling="no"
-        src="//tianqi.2345.com/plugin/widget/index.htm?s=3&z=1&t=1&v=0&d=1&bd=0&k=000000&f=&ltf=009944&htf=cc0000&q=1&e=0&a=1&c=70447&w=317&h=28&align=center"
+        style="background-color: white; border-bottom: 1px solid grey"
+        src="//tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=1&v=2&d=2&bd=0&k=000000&f=&ltf=009944&htf=cc0000&q=1&e=1&a=1&c=54511&w=400&h=64&align=center"
       ></iframe>
       <div class="time">{{ nowTime }}</div>
     </div>
@@ -47,23 +47,24 @@
     .title {
       width: 200px;
       height: 100%;
-      font-size: 32px;
+      font-size: 36px;
       line-height: 64px;
       text-align: center;
     }
-    .time-info {
-      min-width: 320px;
+    .more-info {
+      min-width: 800px;
       height: 100%;
-      font-size: 16px;
-      text-align: center;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       position: absolute;
       right: 12px;
       .time {
-        margin-top: 4px;
+        flex: 1;
+        height: 100%;
+        line-height: 64px;
+        font-size: 18px;
+        text-align: center;
       }
     }
   }

@@ -6,6 +6,8 @@ import vue from "@vitejs/plugin-vue";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+// 导入对应包
+import ElementPlus from "unplugin-element-plus/vite";
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
@@ -29,10 +31,11 @@ export default defineConfig({
         // 自动导入 Element Plus 组件
         ElementPlusResolver({
           importStyle: "sass",
-          // directives: true,
-          // version: "2.1.5",
         }),
       ],
+    }),
+    ElementPlus({
+      useSource: true,
     }),
   ],
   server: {
