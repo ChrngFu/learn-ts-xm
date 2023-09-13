@@ -4,7 +4,12 @@
     <!-- 列表 -->
     <div class="list-container" ref="listDom" :style="{ height: height - offet + 'px' }">
       <!-- 列表中的元素 -->
-      <div class="list-item" :class="item % 2 === 0 ? 'bg01' : 'bg02'" v-for="item in viewList" :key="item">
+      <div
+        class="list-item"
+        :class="item % 2 === 0 ? 'bg-lime-200 dark:bg-lime-600' : 'bg-blue-200 dark:bg-blue-600'"
+        v-for="item in viewList"
+        :key="item"
+      >
         {{ item }}
       </div>
     </div>
@@ -58,12 +63,6 @@
         height: 45px;
         line-height: 45px;
         text-align: center;
-      }
-      .bg01 {
-        background-color: var(--my-color-lightgreen);
-      }
-      .bg02 {
-        background-color: var(--my-color-lightblue);
       }
     }
   }

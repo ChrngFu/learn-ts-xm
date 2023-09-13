@@ -3,7 +3,7 @@
     IndexedDB
     <br />
     <h2>图片类型文件可以点击预览</h2>
-    <div class="file-list">
+    <div class="file-list" ref="parent">
       <el-upload
         style="margin-bottom: 8px"
         ref="uploadRef"
@@ -66,7 +66,7 @@
     UploadRawFile,
   } from "element-plus";
   import PreviewImg from "@/components/PreviewImg.vue";
-  import anime from "animejs";
+  import { useAutoAnimate } from "@formkit/auto-animate/vue";
   import { findLastIndex } from "lodash";
   import LocalData from "@/utils/indexDB";
   import showMessage from "@/utils/message";
@@ -127,17 +127,9 @@
 
   // 删除文件列表项
   const hadnleDelete = (item: UploadUserFile) => {
-    const index = fileList.value.findIndex(file => file.uid === item.uid);
-    const el = document.querySelectorAll(".file-list-main")[index];
-    anime({
-      targets: el,
-      translateY: -100,
-      opacity: 0,
-      complete: () => {
-        fileList.value = fileList.value.filter(file => file.uid !== item.uid);
-      },
-    });
+    fileList.value = fileList.value.filter(file => file.uid !== item.uid);
   };
+  const [parent] = useAutoAnimate();
   const submitUpload = () => {
     const files: UploadUserFile[] = [];
     fileList.value.forEach(file => {

@@ -12,7 +12,7 @@
     "check": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "animejs": "^3.2.1",
+    "@formkit/auto-animate": "^0.8.0",
     "autofit.js": "^3.0.4",
     "axios": "^1.4.0",
     "echarts": "^5.4.3",
@@ -25,11 +25,13 @@
     "vue-router": "^4.2.2"
   },
   "devDependencies": {
-    "@types/animejs": "^3.1.7",
     "@types/lodash": "^4.14.195",
     "@types/node": "^20.4.4",
     "@types/nprogress": "^0.2.0",
     "@vitejs/plugin-vue": "^4.1.0",
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.29",
+    "tailwindcss": "^3.3.3",
     "terser": "^5.19.2",
     "typescript": "^5.0.2",
     "unplugin-auto-import": "^0.16.6",

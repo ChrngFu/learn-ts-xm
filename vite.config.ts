@@ -8,6 +8,8 @@ import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 // 导入对应包
 import ElementPlus from "unplugin-element-plus/vite";
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
@@ -58,6 +60,9 @@ export default defineConfig({
         @use '@/styles/element/index.scss' as *;
           `,
       },
+    },
+    postcss: {
+      plugins: [tailwindcss, autoprefixer],
     },
   },
   base: "./",
