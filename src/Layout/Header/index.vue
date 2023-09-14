@@ -45,8 +45,9 @@
     @include flex();
     position: relative;
     .title {
-      width: 200px;
+      width: fit-content;
       height: 100%;
+      padding: 0 20px;
       font-size: 36px;
       line-height: 64px;
       text-align: center;
