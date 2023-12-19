@@ -38,6 +38,7 @@
 <style scoped lang="scss">
   .xm-header {
     width: 100%;
+    min-width: 1000px;
     height: 64px;
     padding: 0 12px;
     border-bottom: 1px solid grey;
@@ -45,7 +46,7 @@
     @include flex();
     position: relative;
     .title {
-      width: fit-content;
+      width: 300px;
       height: 100%;
       padding: 0 20px;
       font-size: 36px;
@@ -53,7 +54,7 @@
       text-align: center;
     }
     .more-info {
-      min-width: 800px;
+      width: 800px;
       height: 100%;
       display: flex;
       align-items: center;
